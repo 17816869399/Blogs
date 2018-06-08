@@ -1,2 +1,0 @@
-# Bolgs
-simple blogs

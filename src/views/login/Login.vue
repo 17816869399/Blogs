@@ -74,10 +74,6 @@ export default {
               alert("用户名或者密码不能为空");
               }else{
 
-                console.log(this.user_name);
-                console.log(this.user_psd);
-                console.log(typeof this.user_name);
-
                 let data = {'user_name':this.user_name,'password':this.user_psd}
 
                 console.log(data.user_name);

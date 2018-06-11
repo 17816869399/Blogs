@@ -11,10 +11,10 @@
             <h1>Login</h1>
             <form id="userLogin" method="post" autocomplete="off">
                   <div class="username">
-                    <el-input    v-model="user_name" class="username_input"  placeholder="Emial or Phone" clearable></el-input>
+                    <el-input  v-model="user_name" class="username_input"  placeholder="Emial or Phone" @keyup.enter.native="Gocheck()" clearable></el-input>
                   </div>
                   <div class="password">
-                    <el-input  v-model="user_psd" class="password_input" type="password" placeholder="password" clearable></el-input>        
+                    <el-input  v-model="user_psd" class="password_input" type="password" placeholder="password" @keyup.enter.native="Gocheck()" clearable></el-input>        
                   </div>
                   <el-button type="primary" @click="Gocheck()" class="loginbtn" id="loginBtn" round>Login</el-button>
                   <p class="login_register">Don't have an account? <span @click="ToRegister()">Register</span> now</p> 
@@ -60,6 +60,7 @@ export default {
       msg: 'App',
       user_name:'',
       user_psd:'',
+
     //   newuser_name:'',
     //   newuser_psd:'',
     //   showLogin: true,
@@ -73,26 +74,30 @@ export default {
               alert("用户名或者密码不能为空");
               }else{
 
-                let data = {'user-name':this.user_name,'password':this.user_psd}
-                // LoginCheck(this.user_name,this.user_psd);
+                console.log(this.user_name);
+                console.log(this.user_psd);
+                console.log(typeof this.user_name);
+
+                let data = {'user_name':this.user_name,'password':this.user_psd}
+
+                console.log(data.user_name);
+                console.log(data.password);
+
                 var api = 'http://47.95.205.248:8080/user/login';
-                this.$http.jsonp(api,data).then((response)=>{
+                this.$http.post(api,data,{  
+                            emulateJSON:true  
+                        }).then((response)=>{
                     console.log(response);
-                
-                //    setTimeout(function(){
-                //       this.$router.push('/home')
-                //   }.bind(this),1000)
+                    alert(response.body.message);
+
+                    if(response.body.code == '0' ){
+                        this.$router.push('/home')
+                    }   
                 },function(err){
                     console.log(err);
                 })
               }
       },
-      ToRegister(){
-          alert('123');          
-      },
-      ToLogin(){
-
-      }
 
   }
 }
@@ -102,19 +107,17 @@ export default {
 <style  scoped>
 
 .login{
-    /* background-color:rgb(175, 53, 53); */
     background: url(../../images/login.jpg);
     margin: 0 auto;
     padding: 0;
-    /* height: 500px; */
 }
 .login_main{
-    background:#fff;
-    width: 500px;
-    /* height: 400px; */
+    background-color:rgba(255, 255, 255, 0.5);
+    /* background:#fff; */
+    /* width: 30%; */
+    width: 400px;
     margin: auto;
     border-radius: 15px;
-
 }
 .login_main_form{
     padding: 0 10px;
@@ -138,11 +141,18 @@ export default {
     /* opacity:0.3; */
 }
 .loginbtn{
-    width: 300px;
-    margin-top: 25px;
+    width: 60%;
+    margin-top: 35px;
 }
 .login_register{
     padding-top: 10px 0 0 0 ;
+}
+
+.username_input{
+    width: 80%;
+}
+.password_input{
+    width: 80%;
 }
 
 h1, h2 {

@@ -76,7 +76,7 @@ export default {
                 let data = {'user-name':this.user_name,'password':this.user_psd}
                 // LoginCheck(this.user_name,this.user_psd);
                 var api = 'http://47.95.205.248:8080/user/login';
-                this.$http.jsonp(api,data).then((response)=>{
+                this.$http.post(api,data).then((response)=>{
                     console.log(response);
                 
                 //    setTimeout(function(){

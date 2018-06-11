@@ -75,7 +75,7 @@ export default {
               }else{
 
                 let data = {'user_name':this.user_name,'password':this.user_psd}
-
+                console.log('------')
                 console.log(data.user_name);
                 console.log(data.password);
 
